@@ -27,7 +27,6 @@ def main():
     html_content = fetch_html(url)
     if html_content:
         latest_stories = extract_latest_stories(html_content)
-        # Print the latest stories in the desired format
         print("[")
         for story in latest_stories:
             print("{")
