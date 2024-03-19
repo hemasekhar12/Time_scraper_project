@@ -1,14 +1,15 @@
-import urllib.request
+import http.client
 import re
 
 def fetch_html(url):
     try:
-        with urllib.request.urlopen(url) as response:
-            html_content = response.read().decode('utf-8')
-            #print(html_content)
+        conn = http.client.HTTPSConnection("time.com")
+        conn.request("GET", "/")
+        response = conn.getresponse()
+        html_content = response.read().decode('utf-8')
+        conn.close()
         return html_content
-        
-    except urllib.error.URLError as e:
+    except Exception as e:
         print("Error fetching URL:", e)
         return None
 
@@ -31,7 +32,7 @@ def main():
         for story in latest_stories:
             print("{")
             print(f'"title": "{story["title"]}",')
-            print(f'"link": "https://time.com{story["link"]}"')
+            print(f'"link": "{story["link"]}"')
             print("},")
         print("]")
     else:
